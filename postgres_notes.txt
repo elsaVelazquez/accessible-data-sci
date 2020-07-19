@@ -4,9 +4,11 @@ to run a docker instance with postgres . (!!don't panic if you do not see [maste
 #######################################################################
 *** to begin docker 
     type from anywhere in your regular terminal (don't have to be home but it serves as a good check you are in the correct shell):
+    
     cd ~
     docker start pgserv
-        *** it will look like ---> 
+       
+       *** it will look like ---> 
             (base) ✘-127 ~/Documents/folder/data [master|✔]
             21:40 $ docker start pgserv
             pgserv
@@ -16,7 +18,9 @@ to run a docker instance with postgres . (!!don't panic if you do not see [maste
 #######################################################################
 ***to get a docker bash shell-->
     type from your regular terminal:
+        
         docker exec -it pgserv bash
+            
             *** it will look like ---> 
                 21:41 $ docker exec -it pgserv bash
 
@@ -24,28 +28,19 @@ to run a docker instance with postgres . (!!don't panic if you do not see [maste
 
 #######################################################################
 ***from this pgserv bash, go to the dump file where the db is saved
-
     type from this bash terminal:
+    
         ls 
-        cd /home/data/Documents/dsi/repos/sql/data
+        cd /home/data/Documents/folder/data
         ls
         
             *** it will look something like ---> 
-                (base) ✔ ~/Documents/folder/data [master|✔]
-                21:41 $ docker exec -it pgserv bash
                 root@eef531aaa955:/# ls
                 bin   dev			  docker-entrypoint.sh	home  lib64  mnt  proc	run   srv  tmp	var
                 boot  docker-entrypoint-initdb.d  etc			lib   media  opt  root	sbin  sys  usr
-
-                root@eef531aaa955:/home/data# ls
-                Applications		       Dropbox			        Movies	    Public
-                example_confidence_interval.py   Music	    
-                get-pip.py		       test.py
-                Desktop		           Untitled.ipynb
-                Documents		       Pictures    
-                Downloads		       Library			        pip
-
-
+                
+                root@eef531aaa955: cd /home/data/Documents/folder/data             
+                
                 root@eef531aaa955:/home/data/Documents/folder/data# ls
                 some_db.sql
 
