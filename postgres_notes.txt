@@ -209,21 +209,21 @@ to run a docker instance with postgres . (!!don't panic if you do not see [maste
 *** can now start working with db 
     type this from some_db=# 
     
-    SELECT * FROM buy limit 15;
+    SELECT * FROM buy limit 2;
     
             *** it will look like ---> 
                 some_db=# SELECT * FROM buy limit 2;
 
 
                     ***you will get back something like this -->
-                        housing=# SELECT * FROM buy limit 10;
-                            neighborhood      |    city     | state | med_2011 | med_2014
+                        housing=# SELECT * FROM buy limit 2;
+                            neighborhood      |    city     | state | med_yr1 | med_yr2
                         -----------------------+-------------+-------+----------+----------
                         Southeast New Orleans | Dallas      | TX    |    38700 |    43600
                         Roosevelt             | Hills       | CA    |    44440 |    11222
                         (2 rows)
 
-                        housing=#
+                        some_db=#
 
 #######################################################################
 #######################################################################
