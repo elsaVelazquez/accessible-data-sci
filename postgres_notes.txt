@@ -1,0 +1,241 @@
+to run a docker instance with postgres . (!!don't panic if you do not see [master|✔], it's just some extra stuff I have installed)
+
+
+#######################################################################
+*** to begin docker 
+    type from anywhere in your regular terminal (don't have to be home but it serves as a good check you are in the correct shell):
+    cd ~
+    docker start pgserv
+        *** it will look like ---> 
+            (base) ✘-127 ~/Documents/folder/data [master|✔]
+            21:40 $ docker start pgserv
+            pgserv
+            docker start pgserv
+
+
+#######################################################################
+***to get a docker bash shell-->
+    type from your regular terminal:
+        docker exec -it pgserv bash
+            *** it will look like ---> 
+                21:41 $ docker exec -it pgserv bash
+
+
+
+#######################################################################
+***from this pgserv bash, go to the dump file where the db is saved
+
+    type from this bash terminal:
+        ls 
+        cd /home/data/Documents/dsi/repos/sql/data
+        ls
+        
+            *** it will look something like ---> 
+                (base) ✔ ~/Documents/folder/data [master|✔]
+                21:41 $ docker exec -it pgserv bash
+                root@eef531aaa955:/# ls
+                bin   dev			  docker-entrypoint.sh	home  lib64  mnt  proc	run   srv  tmp	var
+                boot  docker-entrypoint-initdb.d  etc			lib   media  opt  root	sbin  sys  usr
+
+                root@eef531aaa955:/home/data# ls
+                Applications		       Dropbox			        Movies	    Public
+                example_confidence_interval.py   Music	    
+                get-pip.py		       test.py
+                Desktop		           Untitled.ipynb
+                Documents		       Pictures    
+                Downloads		       Library			        pip
+
+
+                root@eef531aaa955:/home/data/Documents/folder/data# ls
+                some_db.sql
+
+
+
+#######################################################################
+***switch to the postgres terminal, which looks like-> postgres=#
+    type this from root@eef531aaa955:/home/data/Documents/folder/data# 
+        psql -U postgres
+            *** it will look something like like ---> 
+                root@eef531aaa955:/home/data/Documents/folder/data# psql -U postgres
+                
+
+
+                *** you will get something like this:
+                    root@eef531aaa955:/home/data/Documents/folder/data# psql -U postgres
+                    psql (12.3 (Debian 12.3-1.pgdg100+1))
+                    Type "help" for help.
+
+                    postgres=#
+
+
+
+#######################################################################
+*** to check if I have the db there already, list all db 
+    type this from postgres=#
+    \l
+         *** it will look like like ---> 
+            postgres=# \l
+            
+            
+            *** you will get something like this:
+        
+                                                    List of databases
+                        Name     |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
+                    --------------+----------+----------+------------+------------+-----------------------
+                    gold         | ender    | UTF8     | en_US.utf8 | en_US.utf8 |
+                    golf         | ender    | UTF8     | en_US.utf8 | en_US.utf8 |
+                    some_db      | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+                    some_db_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+                    pets         | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+                    postgres     | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+                    some_db | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+                    socialmedia  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+                    template0    | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+                                |          |          |            |            | postgres=CTc/postgres
+                    template1    | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+                                |          |          |            |            | postgres=CTc/postgres
+                    yeah         | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+
+
+#######################################################################
+**** make the db if it is not already made (do this step if you are not sure if it already exists)
+    type this from the postgres shell:
+        create database some_db;
+        
+        *** it will look like ---> 
+            root@eef531aaa955:/home/data/Documents/folder/data# psql -U postgres
+            psql (12.3 (Debian 12.3-1.pgdg100+1))
+            Type "help" for help.
+
+            postgres=# create database some_db
+
+                if it did not yet exist, you will get back-->
+                CREATE DATABASE
+                
+                if it already existed, you will not get anything back
+
+
+
+#######################################################################
+*** quit postgres 
+    type this:
+    
+    \q
+    
+    *** it will look like ---> 
+        postgres=# \q
+
+
+
+#######################################################################
+*** make sure you are in the right folder for the next step, mapping 
+*** meaning you are in the same folder as the .sql file, i.e. that you see some_db.sql in here
+    type this from the postgres bash:
+    
+    ls
+    
+    *** it will look like ---> 
+        root@eef531aaa955:/home/data/Documents/folder/data# ls
+        some_db.sql
+
+
+
+#######################################################################
+*** map the data to the database back in the repos data folder
+    type from this postgres bash:
+    
+    psql -U postgres some_db < some.sql
+    
+            *** it will look like ---> 
+                root@eef531aaa955:/home/data/Documents/folder/data# psql -U postgres some_db < some.sql
+            
+
+
+                *** should get confirmation with printout of stuff 
+                    *** it will look like ---> 
+                        SET
+                        SET
+                        SET
+                        SET
+                        SET
+                        SET
+                        SET
+                        CREATE EXTENSION
+                        COMMENT
+                        SET
+                        SET
+                        SET
+                        ERROR:  relation "buy" already exists
+                        ERROR:  relation "rent" already exists
+                        COPY 775
+                        COPY 4884
+                        REVOKE
+                        REVOKE
+                        GRANT
+                        GRANT
+
+
+
+#######################################################################
+*** move out of bash into db 
+    type this:
+    
+    psql -U postgres some_db
+    
+        *** it will look like ---> 
+            root@eef531aaa955:/home/data/Documents/folder/data# psql -U postgres some_db
+
+
+
+#######################################################################
+*** look at the list of relations
+    type this:
+    
+    \d
+    
+    *** it will look like ---> 
+        some_db=# \d 
+        
+        *** and will get back-->
+                        List of relations
+                    Schema | Name | Type  |  Owner
+                    --------+------+-------+----------
+                    public | buy  | table | postgres
+                    public | rent | table | postgres
+
+
+
+#######################################################################
+*** can now start working with db 
+    type this from some_db=# 
+    
+    SELECT * FROM buy limit 15;
+    
+            *** it will look like ---> 
+                some_db=# SELECT * FROM buy limit 2;
+
+
+                    ***you will get back something like this -->
+                        housing=# SELECT * FROM buy limit 10;
+                            neighborhood      |    city     | state | med_2011 | med_2014
+                        -----------------------+-------------+-------+----------+----------
+                        Southeast New Orleans | Dallas      | TX    |    38700 |    43600
+                        Roosevelt             | Hills       | CA    |    44440 |    11222
+                        (2 rows)
+
+                        housing=#
+
+#######################################################################
+#######################################################################
+#######################################################################
+
+***to run it as a script in a .sql file:
+***personal terminal command line command
+*** have to be in the docker bash --->
+docker exec -it pgserv bash
+psql -U postgres -d some_db -f readychef_script.sql 
+
+from postgres cmd line--->
+/i 
+
+
